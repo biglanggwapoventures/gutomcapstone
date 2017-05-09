@@ -1,0 +1,79 @@
+.media-header-wrapper:hover{
+    text-decoration:none;
+}
+.food-card{
+	border: 1px solid #e7e7e7;
+    border-radius:4px;
+    background-color:#fff;
+    transition: all 0.2s ease;
+    margin-bottom:10px;
+	
+	.details{
+		padding:10px;
+	}
+}
+.food-card.hover:hover{
+	border:1px solid #aa4a24;
+}
+.gutom-card{
+    border: 1px solid #e7e7e7;
+    border-radius:4px;
+    background-color:#fff;
+    transition: all 0.2s ease;
+    margin-bottom:10px;
+
+    .media{
+      margin:15px 15px 0 15px;
+      padding-bottom:15px;
+      border-bottom: 1px #e7e7e7 dashed;
+
+      .media-left{
+        padding-left:0;
+
+        .media-object{
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          width: 90px;
+          height: 90px;
+          border-radius: 4px;
+          .link{
+            display: block; 
+            height: 100%;
+          }
+        }
+      }
+
+      .categories{
+        text-transform:uppercase;
+        color: #89959B;
+      }
+
+      .media-heading{
+        color:#bf5329;
+      }
+
+      
+
+    }
+
+    &:hover {
+      border:1px solid #aa4a24;
+    }
+
+	table.details{
+		width:100%;
+		font-size:85%;
+		margin:10px 0px 10px 15px;
+		tr {
+			td:first-child{
+				width: 20%;
+				color: #89959B;
+			}
+			td:nth-child(2){
+				color:#33373D
+			}
+		}
+	}
+}
+
