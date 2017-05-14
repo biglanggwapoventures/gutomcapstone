@@ -33,7 +33,13 @@
                                         
                                     </div>
                                     <div class="details">
-                                        <h4 style="margin:0px">{{ $m->name }}<small class="pull-right label label-danger">Php {{ number_format($m->price, 2) }}</small></h4>
+                                        <h4 style="margin:0px">
+                                            {{ $m->name }} 
+                                            @if(!$m->available)
+                                                <small class="text-danger text-uppercase">not available</small>
+                                            @endif
+                                            <small class="pull-right label label-danger">Php {{ number_format($m->price, 2) }}</small>
+                                        </h4>
                                         <p style="color:#89959B;border-bottom:1px dashed #e7e7e7;padding-bottom:5px;text-transform:uppercase">
                                             {{ implode(', ', $m->categoriesFlatArray()) }}
                                         </p>
@@ -50,7 +56,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            @if(Auth::check())
+                                            @if(Auth::check() && Auth::user()->isStandardUser() && $m->available)
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
                                                     <div class="input-group" style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed #e7e7e7;">

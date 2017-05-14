@@ -58,11 +58,12 @@ class MenuController extends Controller
             'preparation',
         ]);
         $data['photo'] = $logoPath;
+        $data['available'] = (bool)$request->available;
 
         $menu = $restaurant->menu()->save(new Menu($data));
         $menu->categories()->sync($request->input('categories'));
 
-        return redirect()->intended(route('menu.index'));
+        return redirect()->route('menu.index')->with('notification', "New product: \"{$menu->name}\" has been successfully added!");;
 
     }
 
@@ -121,6 +122,7 @@ class MenuController extends Controller
             'description',
             'preparation',
         ]);
+        $data['available'] = (bool)$request->available;
 
         if(isset($logoPath)){
             $data['photo'] = $logoPath;
@@ -130,7 +132,7 @@ class MenuController extends Controller
         $menu->update($data);
         $menu->categories()->sync($request->input('categories'));
 
-        return redirect()->intended(route('menu.edit', ['id' => $menu->id]));
+        return redirect()->route('menu.edit', ['id' => $menu->id])->with('notification', "Product \"{$menu->name}\" has been successfully updated!");
     }
 
     /**

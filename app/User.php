@@ -58,6 +58,11 @@ class User extends Authenticatable
         return $this->role === self::ROLE_RESTAURANT_OWNER;
     }
 
+    public function isStandardUser()
+    {
+        return $this->role === self::ROLE_USER;
+    }
+
     public function restaurant()
     {
         return $this->hasOne('App\Restaurant', 'created_by');

@@ -76,29 +76,30 @@ class Order extends Model
     public function getTotal($formatted = false)
     {
         if($this->total === null){
-            $this->total = $this->items->sum(function ($item) {
-                return ($item['price'] * $item['quantity']);
-            });
+            $this->total = $this->items->where('available', true)
+                ->sum(function ($item) {
+                    return ($item['price'] * $item['quantity']);
+                });
         }
         return $formatted ? number_format($this->total, 2) : $this->total;
     }
 
-    public function isPending() : bool
+    public function isPending()
     {
         return $this->order_status === self::STATUS_PENDING;
     }
 
-    public function isApproved() : bool
+    public function isApproved()
     {
         return $this->order_status === self::STATUS_APPROVED;
     }
 
-    public function isCancelled() : bool
+    public function isCancelled()
     {
         return $this->order_status === self::STATUS_CANCELLED;
     }
 
-    public function isDineIn() : bool
+    public function isDineIn()
     {
         return $this->order_type === self::TYPE_DINE_IN;
     }

@@ -63,7 +63,7 @@
                             <span class="fa fa-check fa-fw" aria-hidden="true"></span> Reviews
                         </a>
                     </div>
-                    @if(Auth::check())
+                    @if(Auth::check() && Auth::user()->isStandardUser())
                     <div class="btn-group" role="group">
                         <a class="btn btn-danger {{ $nav === 'cart' ? 'active' : '' }}" href="{{ route('restaurant.cart', ['id' => $restaurant->id]) }}">
                             <span class="fa fa-shopping-cart fa-fw" aria-hidden="true"></span> My Cart

@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\MyRestaurant;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
+use App\OrderLine;
 use App\Order;
-use Auth;
 use Validator;
+use Auth;
+use DB;
+
 
 class OrdersController extends Controller
 {
@@ -99,6 +103,16 @@ class OrdersController extends Controller
     public function update(Request $request, $id)
     {
         $v = Validator::make($request->all(), [
+            'available.*.order_line_id' => [
+                'required_with:available.*.available',
+                Rule::exists('order_lines', 'id')->where(function ($query) USE ($id) {
+                    $query->where('order_id', $id);
+                })
+            ],
+            'available.*.available' => [
+                'required_with:available.*.order_line_id',
+                'boolean'
+            ],
             'remarks' => 'present',
             'order_status' => 'required|in:CANCELLED,APPROVED'
         ]);
@@ -109,12 +123,25 @@ class OrdersController extends Controller
                 'errors' => $v->errors()->all()
             ]);
         }
+        
 
-        Order::whereId($id)
-            ->whereOrderStatus(Order::STATUS_PENDING)
-            ->update($request->only([
-                'remarks', 'order_status'
-            ]));
+        $updatedFields = $request->only(['remarks', 'order_status' ]);
+        $orderLine = array_column($request->available, 'available', 'order_line_id');
+
+        DB::transaction(function () USE ($id, $updatedFields, $orderLine) {
+             Order::whereId($id)
+                ->whereOrderStatus(Order::STATUS_PENDING)
+                ->update($updatedFields);
+
+            OrderLine::whereIn('id', array_keys($orderLine))
+                ->get()
+                ->each(function ($line) USE ($orderLine){
+                    if(isset($orderLine[$line->id]) && !$orderLine[$line->id]){
+                        $line->available = false;
+                        $line->save();
+                    }
+                });
+        }, 5);
 
         return response()->json([
             'result' => true,

@@ -29,6 +29,7 @@ class MenuItemRequest extends FormRequest
             'categories' => 'required|array',
             'categories.*' => 'required|exists:menu_categories,id',
             'price' => 'required|numeric',
+            'available' => 'boolean',
             'description' => 'required|max:255',
             'preparation' => 'required|max:255',
             'photo' => 'required|image|max:2048'

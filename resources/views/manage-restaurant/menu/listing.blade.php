@@ -14,6 +14,7 @@
 						<th>Name</th>
 						<th>Category</th>
 						<th>Price</th>
+						<th>Availability</th>
 					</tr>
 				</thead>	
 				<tbody>
@@ -28,10 +29,17 @@
 							<td>{{ $i->name }}</td>
 							<td>{{ implode(', ', $i->categories->pluck('name')->toArray()) }}</td>
 							<td>{{ number_format($i->price, 2) }}</td>
+							<td>
+							@if($i->available)
+								<span><i class="fa fa-check text-success"></i></span>
+							@else
+								<span><i class="fa fa-times text-warning"></i></span>
+							@endif
+							</td>
 						</tr>
 					@empty
 						<tr>
-							<td colspan="3" class="text-center">No categories recorded</td>
+							<td colspan="4" class="text-center">No categories recorded</td>
 						</tr>
 					@endforelse
 				</tbody>

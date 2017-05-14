@@ -9,8 +9,13 @@ class OrderLine extends Model
     protected $fillable = [
         'order_id',
         'menu_id',
+        'available',
         'quantity',
         'price'
+    ];
+
+    protected $casts = [
+        'available' => 'boolean'
     ];
 
     public function details()

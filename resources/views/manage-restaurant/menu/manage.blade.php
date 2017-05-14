@@ -31,6 +31,12 @@
                         {!! Form::bsText('price', 'Price') !!}
                     </div>
                 </div>
+				<div class="checkbox">
+					<label class="text-danger">
+						{!! Form::checkbox('available', 1) !!}
+						This product is available
+					</label>
+				</div>
 				<hr>
 				<button type="submit" class="btn btn-success btn">Save</button>
                 {!! link_to_route('menu.index', 'Back', null, ['class' => 'pull-right btn btn-default']) !!}

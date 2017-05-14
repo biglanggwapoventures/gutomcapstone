@@ -96,7 +96,11 @@
                                                                                     </div>
                                                                                 <div class="product-price">{{ $c->formattedPrice() }}</div>
                                                                                 <div class="product-quantity">
-                                                                                    {!! Form::number('', $c->quantity, ['class' => 'product-quantity-input', 'min' => 1, 'step' => 1]) !!}
+                                                                                    @if($i->isPending())
+                                                                                        {!! Form::number('', $c->quantity, ['class' => 'product-quantity-input', 'min' => 1, 'step' => 1]) !!}
+                                                                                     @else
+                                                                                        <p>{{ number_format($c->quantity, 2)  }}</p>
+                                                                                    @endif
                                                                                 </div>
                                                                                 <div class="product-removal">
                                                                                     @if($i->isPending())
@@ -107,7 +111,7 @@
                                                                                             <i class="fa fa-times" type="button"></i>
                                                                                         </button>
                                                                                     @else
-                                                                                        &nbsp;
+                                                                                        {!! !$c->available ? '<span class="text-danger text-uppercase">not available</span>' : '&nbsp;' !!}
                                                                                     @endif
                                                                                 </div>
                                                                                 <div class="product-line-price">

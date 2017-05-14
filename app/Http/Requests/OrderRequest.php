@@ -29,7 +29,7 @@ class OrderRequest extends FormRequest
             'payment_type' => 'required|in:CASH,CREDIT_CARD',
             'name' => 'required|max:100',
             'contact_number' => 'required|max:15',
-            'order_date' => 'required|date_format:"Y-m-d"',
+            'order_date' => 'required|date_format:"Y-m-d"|after:today',
             'order_time' => 'required|date_format:"g:i A"',
             'guest_count' => 'required_if:order_type,DINE_IN|min:1',
             // 'cook_time' => 'required_if:order_type,DINE_IN|date_format:"g:i A"',

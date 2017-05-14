@@ -10,6 +10,7 @@ class Menu extends Model
         'restaurant_id',
         'name',
         'price',
+        'available',
         'description',
         'preparation',
         'photo'
@@ -17,6 +18,9 @@ class Menu extends Model
 
     protected $appends = ['category_ids'];
 
+    protected $casts = [
+        'available' => 'boolean'
+    ];
 
     public function getPhotoAttribute($value)
     {

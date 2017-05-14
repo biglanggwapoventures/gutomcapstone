@@ -17,9 +17,10 @@ class AdvertisementsController extends Controller
      */
     public function index()
     {
+        $restaurant = Auth::user()->restaurant;
         return view('manage-restaurant.advertisements.listing', [
-            'restaurant' => Auth::user()->restaurant,
-            'items' => Advertisement::orderBy('id', 'DESC')->get()
+            'restaurant' => $restaurant,
+            'items' => $restaurant->advertisements()->orderBy('id', 'DESC')->get()
         ]);
     }
 
